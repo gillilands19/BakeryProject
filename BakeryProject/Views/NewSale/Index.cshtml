@@ -1,0 +1,49 @@
+﻿@model BakeryProject.Models.SaleDetail
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Order</h4>
+    <hr />
+
+    @foreach (var product in ViewBag.Products)
+    {
+        @*@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <strong class="control-label col-md-2">Choose Product</strong>
+            <div class="col-md-10">
+                @Html.DropDownList("ProductKey", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProductKey, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <strong class="control-label col-md-2">@product.ProductName - $@(Math.Round(product.ProductPrice, 2))</strong>
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.SaleDetailQuantity, new { htmlAttributes = new { @class = "form-control", value = "0", placeholder = "Enter Quantity" } })
+                @Html.ValidationMessageFor(model => model.SaleDetailQuantity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Submit Order" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
